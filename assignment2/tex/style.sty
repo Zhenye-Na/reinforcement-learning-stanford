@@ -1,0 +1,181 @@
+%\usepackage[english]{babel}
+%
+%% Layout and Style
+%%\usepackage{fancyhdr}
+%%\frenchspacing          % Spacing between sentences
+%%\usepackage{paralist,booktabs}  % compactlist, compactitem, and nice tables
+%%\usepackage{tocloft}   % Spacing in Table of Contents
+%%\renewcommand{\cftbeforesecskip}{1.5pt}
+%
+%% Math
+%\usepackage{amssymb,amsmath,amsthm} % Standard Math symbols, operators, and environments
+%\usepackage[nice]{nicefrac}         % Better small fractions
+%\usepackage{esint,cases}            % \oiint, \iint, and function case construction
+%
+% Python Code
+\usepackage{listings, textcomp, color, verbatim}
+\definecolor{deepgreen}{rgb}{0,0.4,0}
+
+\lstdefinestyle{python}{
+		language=python,
+		basicstyle=\color{black}\ttfamily\footnotesize,
+		stringstyle=\color{deepgreen}\slshape,
+		commentstyle=\color{gray}\slshape,
+		keywordstyle=\color{red}\bf,
+		emphstyle=\color{blue}\bf,
+		tabsize=2,
+		%%%%%%%%%%%%%%%
+		showstringspaces=false,
+    emph={access,and,break,class,continue,def,del,elif,else,except,exec,finally,for,from,global,if,import,in,i s,lambda,not,or,pass,print,raise,return,try,while,as},
+		upquote=true,
+		morecomment=[s]{"""}{"""},
+		literate=*
+		{:}{{\textcolor{blue}:}}{1}%
+		{=}{{\textcolor{blue}=}}{1}%
+		{-}{{\textcolor{blue}-}}{1}%
+		{+}{{\textcolor{blue}+}}{1}%
+		{*}{{\textcolor{blue}*}}{1}%
+		{!}{{\textcolor{blue}!}}{1}%
+		{(}{{\textcolor{blue}(}}{1}%
+		{)}{{\textcolor{blue})}}{1}%
+		{[}{{\textcolor{blue}[}}{1}%
+		{]}{{\textcolor{blue}]}}{1}%
+		{<}{{\textcolor{blue}<}}{1}%
+		{>}{{\textcolor{blue}>}}{1},%
+		%%%%%%%%%%%%%%%%
+		aboveskip=\baselineskip,
+		xleftmargin=20pt, xrightmargin=15pt,
+		frame=lines,
+		numbers=left, numberstyle=\tiny
+}
+\lstnewenvironment{python}{\lstset{style=python}}{}
+\newcommand{\inputsamplepython}[1]{\lstinputlisting[style=python]{../ClassCodes/#1}}
+\newcommand{\inputpython}[1]{\lstinputlisting[style=python]{#1}}
+
+% C++ Code
+\usepackage{alltt, listings, textcomp, color, verbatim}
+\lstdefinestyle{cpp}{
+		language=C++,                        % choose the language of the code
+		basicstyle=\ttfamily\footnotesize,   % the size of the fonts that are used for the code
+		tabsize=2,                           % sets default tabsize to 2 spaces
+		showstringspaces=false,              % show spaces adding particular underscores
+		showtabs=false,                      % show tabs within strings adding particular underscores
+		keywordstyle=\color{blue},           % keyword style
+		identifierstyle=\color{black},       % identifier style
+		emphstyle=\color{black}\bf,          % emphasis style
+		commentstyle=\color{gray}\slshape,   % comment style
+		stringstyle=\color{gray},            % string literal style
+		aboveskip=\baselineskip,             % skip space when starting code environment
+		xleftmargin=10pt, xrightmargin=10pt, % code margins
+		frame=lines,                         % adds a frame around the code
+		numbers=left,                        % where to put the line-numbers
+		numberstyle=\tiny,                   % the size of the fonts that are used for the line-numbers
+		numbersep=10pt,                      % how far the line-numbers are from the code
+}
+\lstnewenvironment{cpp}{\lstset{style=cpp}}{}
+\newcommand{\inputcpp}[1]{\lstinputlisting[style=cpp]{#1}}
+
+%% Fix verbatim whitespace
+%\usepackage{etoolbox}
+%\makeatletter
+%\preto{\@verbatim}{\topsep=0pt \partopsep=0pt}
+%\makeatother
+%
+%% Graphics
+%\usepackage{graphicx}
+%\usepackage{pgf,pgffor,pgfplots,pgfplotstable}
+%\usepgfmodule{shapes,plot}
+%\usepackage{tikz}
+%\usetikzlibrary{decorations,arrows,decorations}
+%
+%% Hyperlink sections, references, and citations
+%\definecolor{LinkBlue}{RGB}{5,10,200}
+%\usepackage[urlcolor=LinkBlue,linkcolor=LinkBlue,citecolor=LinkBlue,colorlinks=true]{hyperref}
+%
+%% Problems and Questions
+%\usepackage{suffix}
+%\newcommand{\problem}[1]{\newpage\addtocounter{section}{1}\phantomsection\addcontentsline{toc}{section}{Problem \arabic{section} - #1}\section*{Problem \arabic{section} - #1}}
+%\WithSuffix\newcommand\problem*[1]{\newpage\phantomsection\addcontentsline{toc}{section}{#1}\section*{#1}}
+%\newcommand{\subproblem}[1]{\phantomsection\addcontentsline{toc}{subsection}{#1}\subsection*{#1}}
+%\newcommand{\subsubproblem}[1]{\phantomsection\addcontentsline{toc}{subsubsection}{#1}\subsubsection*{#1}}
+%
+%% Solution environment
+%\newif\ifsolution\solutiontrue   % Include the solutions
+%
+%\definecolor{SolutionColor}{rgb}{0.5,0,0}
+%\ifsolution
+%\newenvironment{solution}{
+%
+%{\bf Solution:}
+%\endgraf\vskip-\lastskip
+%\begingroup\addtolength{\leftskip}{0.5in}\color{SolutionColor}%
+%  \list{}{\parsep \listparindent}\item\relax}%
+%  {\endlist\endgroup}
+%\else
+%\newenvironment{solution}{\comment}{}
+%\fi
+%
+%%% Margins
+%\oddsidemargin  0in \evensidemargin 0in \topmargin -0.5in
+%\headheight 0.25in \headsep 0.25in
+%\textwidth   6.5in \textheight 9in %\marginparsep 0pt \marginparwidth 0pt
+%\parskip 1.5ex  \parindent 0ex \footskip 20pt
+%
+%%% Header
+%%\newcommand*{\MyNumberOfPages}{\hypersetup{linkcolor=black}\pageref{NumberOfPages}\hypersetup{linkcolor=blue}}
+%%\newfont{\bssnine}{cmssbx10 scaled 900}
+%%\pagestyle{fancy}
+%%\fancyhead{\bssnine CME212: Advanced Programming for Scientists and Engineers}
+%%\fancyhead[RE]{} 
+%%\fancyhead[LO]{}
+%%\fancyhead[LE]{\bssnine \arabic{page}/\MyNumberOfPages} 
+%%\fancyhead[RO]{\bssnine \arabic{page}/\MyNumberOfPages}
+%%\lfoot{} \cfoot{} \rfoot{}
+%
+%\AtBeginDocument{
+%%% First page header:
+%\thispagestyle{empty}\vspace*{-0.75in}
+%\newfont{\bssten}{cmssbx10}
+%\begin{minipage}[t]{0.5\linewidth}
+%  {\bssten CME212, Winter 2017\\Advanced Programming for Scientists and Engineers\\}
+%\end{minipage}
+%%\begin{minipage}[t]{0.5\linewidth}
+%%  \vspace*{-22pt} \raggedleft \includegraphics[scale=0.5]{figs/SEAS_IACS}
+%%\end{minipage}
+%}
+%
+%\AtEndDocument{
+%\label{NumberOfPages}
+%}
+%
+%\newcommand{\HWcontents}{%
+%\vspace{-2em}
+%\def\contentsname{\empty}
+%\tableofcontents
+%}
+%
+%% Custom commands %
+%
+%% Shortcuts
+%\renewcommand{\tilde}{\raise.17ex\hbox{$\scriptstyle\sim$}}
+%\renewcommand{\O}{\mathcal{O}}       % Big-Oh
+%\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+%\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+%\newcommand{\sgn}{\text{sgn}}
+%\renewcommand{\Re}{\text{Re}}
+%\renewcommand{\Im}{\text{Im}}
+%\newcommand{\Arg}{\text{Arg}}
+%
+%% Operators
+%\renewcommand{\v}{\mathbf}           % Math bold for vectors
+%\newcommand{\vhat}[1]{\v{\hat{#1}}}
+%\renewcommand{\bar}{\overline}
+%\newcommand{\vbar}[1]{\v{\bar{#1}}}
+%\newcommand{\inner}[2]{#1 \cdot #2}  % Inner product
+%\newcommand{\abs}[1]{\left| {#1} \right|}
+%\newcommand{\norm}[1]{\left\| {#1} \right\|}
+%\newcommand{\ceil}[1]{\left\lceil {#1} \right\rceil}
+%\newcommand{\floor}[1]{\left\lfloor {#1} \right\rfloor}
+%\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+%\renewcommand{\d}[1]{\,\mathrm{d}{#1}}  % \int x \d{x}
+%\newcommand{\del}{\nabla}
