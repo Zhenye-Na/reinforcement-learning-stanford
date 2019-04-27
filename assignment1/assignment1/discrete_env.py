@@ -3,6 +3,7 @@ import numpy as np
 from gym import Env, spaces
 from gym.utils import seeding
 
+
 def categorical_sample(prob_n, np_random):
     """
     Sample from categorical distribution
@@ -28,10 +29,11 @@ class DiscreteEnv(Env):
 
 
     """
+
     def __init__(self, nS, nA, P, isd):
         self.P = P
         self.isd = isd
-        self.lastaction=None # for rendering
+        self.lastaction = None  # for rendering
         self.nS = nS
         self.nA = nA
 
@@ -47,13 +49,13 @@ class DiscreteEnv(Env):
 
     def _reset(self):
         self.s = categorical_sample(self.isd, self.np_random)
-        self.lastaction=None
+        self.lastaction = None
         return self.s
 
     def _step(self, a):
         transitions = self.P[self.s][a]
         i = categorical_sample([t[0] for t in transitions], self.np_random)
-        p, s, r, d= transitions[i]
+        p, s, r, d = transitions[i]
         self.s = s
-        self.lastaction=a
-        return (s, r, d, {"prob" : p})
+        self.lastaction = a
+        return (s, r, d, {"prob": p})

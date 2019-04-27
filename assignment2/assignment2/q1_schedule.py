@@ -10,11 +10,10 @@ class LinearSchedule(object):
             eps_end: end exploration
             nsteps: number of steps between the two values of eps
         """
-        self.epsilon        = eps_begin
-        self.eps_begin      = eps_begin
-        self.eps_end        = eps_end
-        self.nsteps         = nsteps
-
+        self.epsilon = eps_begin
+        self.eps_begin = eps_begin
+        self.eps_end = eps_end
+        self.nsteps = nsteps
 
     def update(self, t):
         """
@@ -26,13 +25,13 @@ class LinearSchedule(object):
         """
         ##############################################################
         """
-        TODO: modify self.epsilon such that 
-			  it is a linear interpolation from self.eps_begin to 
+        TODO: modify self.epsilon such that
+			  it is a linear interpolation from self.eps_begin to
 			  self.eps_end as t goes from 0 to self.nsteps
 			  For t > self.nsteps self.epsilon remains constant
         """
         ##############################################################
-        ################ YOUR CODE HERE - 3-4 lines ################## 
+        ################ YOUR CODE HERE - 3-4 lines ##################
 
         pass
 
@@ -54,7 +53,6 @@ class LinearExploration(LinearSchedule):
         """
         self.env = env
         super(LinearExploration, self).__init__(eps_begin, eps_end, nsteps)
-
 
     def get_action(self, best_action):
         """
@@ -85,11 +83,10 @@ class LinearExploration(LinearSchedule):
         ######################## END YOUR CODE #######################
 
 
-
 def test1():
     env = EnvTest((5, 5, 1))
     exp_strat = LinearExploration(env, 1, 0, 10)
-    
+
     found_diff = False
     for i in range(10):
         rnd_act = exp_strat.get_action(0)

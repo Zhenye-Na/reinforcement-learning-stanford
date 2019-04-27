@@ -16,12 +16,13 @@ class NatureQN(Linear):
     https://storage.googleapis.com/deepmind-data/assets/papers/DeepMindNature14236Paper.pdf
     https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf
     """
+
     def get_q_values_op(self, state, scope, reuse=False):
         """
         Returns Q values for all actions
 
         Args:
-            state: (tf tensor) 
+            state: (tf tensor)
                 shape = (batch_size, img height, img width, nchannels)
             scope: (string) scope name, that specifies if target network or not
             reuse: (bool) reuse of variables in the scope
@@ -38,12 +39,12 @@ class NatureQN(Linear):
                 https://storage.googleapis.com/deepmind-data/assets/papers/DeepMindNature14236Paper.pdf
                 https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf
 
-              you may find the section "model architecture" of the appendix of the 
+              you may find the section "model architecture" of the appendix of the
               nature paper particulary useful.
 
               store your result in out of shape = (batch_size, num_actions)
 
-        HINT: 
+        HINT:
             - You may find the following functions useful:
                 - tf.layers.conv2d
                 - tf.layers.flatten
@@ -53,7 +54,7 @@ class NatureQN(Linear):
 
         """
         ##############################################################
-        ################ YOUR CODE HERE - 10-15 lines ################ 
+        ################ YOUR CODE HERE - 10-15 lines ################
 
         pass
 
@@ -69,12 +70,12 @@ if __name__ == '__main__':
     env = EnvTest((80, 80, 1))
 
     # exploration strategy
-    exp_schedule = LinearExploration(env, config.eps_begin, 
-            config.eps_end, config.eps_nsteps)
+    exp_schedule = LinearExploration(env, config.eps_begin,
+                                     config.eps_end, config.eps_nsteps)
 
     # learning rate schedule
-    lr_schedule  = LinearSchedule(config.lr_begin, config.lr_end,
-            config.lr_nsteps)
+    lr_schedule = LinearSchedule(config.lr_begin, config.lr_end,
+                                 config.lr_nsteps)
 
     # train model
     model = NatureQN(env, config)

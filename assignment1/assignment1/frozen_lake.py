@@ -30,6 +30,7 @@ MAPS = {
     ],
 }
 
+
 class FrozenLakeEnv(discrete_env.DiscreteEnv):
     """
     Winter is here. You and your friends were tossing around a frisbee at the park
@@ -58,33 +59,34 @@ class FrozenLakeEnv(discrete_env.DiscreteEnv):
 
     metadata = {'render.modes': ['human', 'ansi']}
 
-    def __init__(self, desc=None, map_name="4x4",is_slippery=True):
+    def __init__(self, desc=None, map_name="4x4", is_slippery=True):
         if desc is None and map_name is None:
             raise ValueError('Must provide either desc or map_name')
         elif desc is None:
             desc = MAPS[map_name]
-        self.desc = desc = np.asarray(desc,dtype='c')
+        self.desc = desc = np.asarray(desc, dtype='c')
         self.nrow, self.ncol = nrow, ncol = desc.shape
 
-        nA = 4 # number of actions
-        nS = nrow * ncol # number of states
+        nA = 4  # number of actions
+        nS = nrow * ncol  # number of states
 
         isd = np.array(desc == b'S').astype('float64').ravel()
         isd /= isd.sum()
 
-        P = {s : {a : [] for a in range(nA)} for s in range(nS)}
+        P = {s: {a: [] for a in range(nA)} for s in range(nS)}
 
         def to_s(row, col):
-            return row*ncol + col
+            return row * ncol + col
+
         def inc(row, col, a):
-            if a==0: # left
-                col = max(col-1,0)
-            elif a==1: # down
-                row = min(row+1,nrow-1)
-            elif a==2: # right
-                col = min(col+1,ncol-1)
-            elif a==3: # up
-                row = max(row-1,0)
+            if a == 0:  # left
+                col = max(col - 1, 0)
+            elif a == 1:  # down
+                row = min(row + 1, nrow - 1)
+            elif a == 2:  # right
+                col = min(col + 1, ncol - 1)
+            elif a == 3:  # up
+                row = max(row - 1, 0)
             return (row, col)
 
         for row in range(nrow):
@@ -97,13 +99,14 @@ class FrozenLakeEnv(discrete_env.DiscreteEnv):
                         li.append((1.0, s, 0, True))
                     else:
                         if is_slippery:
-                            for b in [(a-1)%4, a, (a+1)%4]:
+                            for b in [(a - 1) % 4, a, (a + 1) % 4]:
                                 newrow, newcol = inc(row, col, b)
                                 newstate = to_s(newrow, newcol)
                                 newletter = desc[newrow, newcol]
                                 done = bytes(newletter) in b'GH'
                                 rew = float(newletter == b'G')
-                                li.append((0.8 if b==a else 0.1, newstate, rew, done))
+                                li.append(
+                                    (0.8 if b == a else 0.1, newstate, rew, done))
                         else:
                             newrow, newcol = inc(row, col, a)
                             newstate = to_s(newrow, newcol)
@@ -124,9 +127,10 @@ class FrozenLakeEnv(discrete_env.DiscreteEnv):
         desc = [[c.decode('utf-8') for c in line] for line in desc]
         desc[row][col] = utils.colorize(desc[row][col], "red", highlight=True)
         if self.lastaction is not None:
-            outfile.write("  ({})\n".format(["Left","Down","Right","Up"][self.lastaction]))
+            outfile.write("  ({})\n".format(
+                ["Left", "Down", "Right", "Up"][self.lastaction]))
         else:
             outfile.write("\n")
-        outfile.write("\n".join(''.join(line) for line in desc)+"\n")
+        outfile.write("\n".join(''.join(line) for line in desc) + "\n")
 
         return outfile

@@ -10,9 +10,9 @@ class DQN(QN):
     """
     Abstract class for Deep Q Learning
     """
+
     def add_placeholders_op(self):
         raise NotImplementedError
-
 
     def get_q_values_op(self, scope, reuse=False):
         """
@@ -20,12 +20,11 @@ class DQN(QN):
         """
         raise NotImplementedError
 
-
     def add_update_target_op(self, q_scope, target_q_scope):
         """
-        Update_target_op will be called periodically 
+        Update_target_op will be called periodically
         to copy Q network to target Q network
-    
+
         Args:
             q_scope: name of the scope of variables for q
             target_q_scope: name of the scope of variables for the target
@@ -33,20 +32,17 @@ class DQN(QN):
         """
         raise NotImplementedError
 
-
     def add_loss_op(self, q, target_q):
         """
         Set (Q_target - Q)^2
         """
         raise NotImplementedError
 
-
     def add_optimizer_op(self, scope):
         """
         Set training op wrt to loss for variable in scope
         """
         raise NotImplementedError
-
 
     def process_state(self, state):
         """
@@ -64,7 +60,6 @@ class DQN(QN):
         state /= self.config.high
 
         return state
-
 
     def build(self):
         """
@@ -90,7 +85,6 @@ class DQN(QN):
         # add optmizer for the main networks
         self.add_optimizer_op("q")
 
-
     def initialize(self):
         """
         Assumes the graph has been constructed
@@ -112,21 +106,27 @@ class DQN(QN):
         # for saving networks weights
         self.saver = tf.train.Saver()
 
-       
     def add_summary(self):
         """
         Tensorboard stuff
         """
         # extra placeholders to log stuff from python
-        self.avg_reward_placeholder = tf.placeholder(tf.float32, shape=(), name="avg_reward")
-        self.max_reward_placeholder = tf.placeholder(tf.float32, shape=(), name="max_reward")
-        self.std_reward_placeholder = tf.placeholder(tf.float32, shape=(), name="std_reward")
+        self.avg_reward_placeholder = tf.placeholder(
+            tf.float32, shape=(), name="avg_reward")
+        self.max_reward_placeholder = tf.placeholder(
+            tf.float32, shape=(), name="max_reward")
+        self.std_reward_placeholder = tf.placeholder(
+            tf.float32, shape=(), name="std_reward")
 
-        self.avg_q_placeholder  = tf.placeholder(tf.float32, shape=(), name="avg_q")
-        self.max_q_placeholder  = tf.placeholder(tf.float32, shape=(), name="max_q")
-        self.std_q_placeholder  = tf.placeholder(tf.float32, shape=(), name="std_q")
+        self.avg_q_placeholder = tf.placeholder(
+            tf.float32, shape=(), name="avg_q")
+        self.max_q_placeholder = tf.placeholder(
+            tf.float32, shape=(), name="max_q")
+        self.std_q_placeholder = tf.placeholder(
+            tf.float32, shape=(), name="std_q")
 
-        self.eval_reward_placeholder = tf.placeholder(tf.float32, shape=(), name="eval_reward")
+        self.eval_reward_placeholder = tf.placeholder(
+            tf.float32, shape=(), name="eval_reward")
 
         # add placeholders from the graph
         tf.summary.scalar("loss", self.loss)
@@ -142,13 +142,11 @@ class DQN(QN):
         tf.summary.scalar("Std_Q", self.std_q_placeholder)
 
         tf.summary.scalar("Eval_Reward", self.eval_reward_placeholder)
-            
+
         # logging
         self.merged = tf.summary.merge_all()
-        self.file_writer = tf.summary.FileWriter(self.config.output_path, 
-                                                self.sess.graph)
-
-
+        self.file_writer = tf.summary.FileWriter(self.config.output_path,
+                                                 self.sess.graph)
 
     def save(self):
         """
@@ -158,7 +156,6 @@ class DQN(QN):
             os.makedirs(self.config.model_output)
 
         self.saver.save(self.sess, self.config.model_output)
-
 
     def get_best_action(self, state):
         """
@@ -172,7 +169,6 @@ class DQN(QN):
         """
         action_values = self.sess.run(self.q, feed_dict={self.s: [state]})[0]
         return np.argmax(action_values), action_values
-
 
     def update_step(self, t, replay_buffer, lr):
         """
@@ -189,38 +185,34 @@ class DQN(QN):
         s_batch, a_batch, r_batch, sp_batch, done_mask_batch = replay_buffer.sample(
             self.config.batch_size)
 
-
         fd = {
             # inputs
             self.s: s_batch,
             self.a: a_batch,
             self.r: r_batch,
-            self.sp: sp_batch, 
+            self.sp: sp_batch,
             self.done_mask: done_mask_batch,
-            self.lr: lr, 
+            self.lr: lr,
             # extra info
-            self.avg_reward_placeholder: self.avg_reward, 
-            self.max_reward_placeholder: self.max_reward, 
-            self.std_reward_placeholder: self.std_reward, 
-            self.avg_q_placeholder: self.avg_q, 
-            self.max_q_placeholder: self.max_q, 
-            self.std_q_placeholder: self.std_q, 
-            self.eval_reward_placeholder: self.eval_reward, 
+            self.avg_reward_placeholder: self.avg_reward,
+            self.max_reward_placeholder: self.max_reward,
+            self.std_reward_placeholder: self.std_reward,
+            self.avg_q_placeholder: self.avg_q,
+            self.max_q_placeholder: self.max_q,
+            self.std_q_placeholder: self.std_q,
+            self.eval_reward_placeholder: self.eval_reward,
         }
 
-        loss_eval, grad_norm_eval, summary, _ = self.sess.run([self.loss, self.grad_norm, 
-                                                 self.merged, self.train_op], feed_dict=fd)
-
+        loss_eval, grad_norm_eval, summary, _ = self.sess.run([self.loss, self.grad_norm,
+                                                               self.merged, self.train_op], feed_dict=fd)
 
         # tensorboard stuff
         self.file_writer.add_summary(summary, t)
-        
-        return loss_eval, grad_norm_eval
 
+        return loss_eval, grad_norm_eval
 
     def update_target_params(self):
         """
         Update parametes of Q' with parameters of Q
         """
         self.sess.run(self.update_target_op)
-

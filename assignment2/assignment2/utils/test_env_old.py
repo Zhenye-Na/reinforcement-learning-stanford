@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class ActionSpace(object):
     def __init__(self, n):
         self.n = n
@@ -21,22 +22,21 @@ class EnvTest(object):
     """
     Adapted from Igor Gitman, CMU / Karan Goel
     """
+
     def __init__(self, shape=(84, 84, 3)):
-        #3 states
+        # 3 states
         self.rewards = [-0.1, 0, 0.1]
         self.cur_state = 0
         self.num_iters = 0
         self.was_in_second = False
         self.action_space = ActionSpace(4)
         self.observation_space = ObservationSpace(shape)
-        
 
     def reset(self):
         self.cur_state = 0
         self.num_iters = 0
         self.was_in_second = False
         return self.observation_space.states[self.cur_state]
-        
 
     def step(self, action):
         assert(0 <= action <= 3)
@@ -50,8 +50,7 @@ class EnvTest(object):
             self.was_in_second = True
         else:
             self.was_in_second = False
-        return self.observation_space.states[self.cur_state], reward, self.num_iters >= 5, {'ale.lives':0}
-
+        return self.observation_space.states[self.cur_state], reward, self.num_iters >= 5, {'ale.lives': 0}
 
     def render(self):
         print(self.cur_state)
