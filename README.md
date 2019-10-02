@@ -2,6 +2,7 @@
 
 <div align="center"><img src="https://blogs.unity3d.com/wp-content/uploads/2017/09/image3.png" width="70%"><p>Reinforcement Learning (Agent and environment). image source: Unity's blog on <a href="https://blogs.unity3d.com/2017/09/19/introducing-unity-machine-learning-agents/2/">Unity Machine Learning Agents Toolkit</a></p></div>
 
+> This repo contains homework, exams and slides I collected from internet **without solutions**. This repo is only for students / developers who are interested in this topic. If this repo conflicts your right, please do not hesitate to contact me. I promise I will delete this (both repo and history) ASAP.
 
 ## Course Description
 
